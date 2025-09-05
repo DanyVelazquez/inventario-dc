@@ -1,0 +1,14 @@
+
+
+#Ignorar base de datos
+
+*.db
+
+#Ignorar Carpeta de de variables 
+
+/home/ec2-user/inventarion_dc/venv
+
+__pycache__/
+*.pyc
+venv/
+

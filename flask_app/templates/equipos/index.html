@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Inventario de Equipos</h2>
+    <div>
+        <a class="btn btn-primary me-2" href="{{ url_for('main.home') }}">
+            <i class="bi bi-list"></i> Listar Inventario
+        </a>
+        <a class="btn btn-success me-2" href="{{ url_for('main.form_equipo') }}">
+            <i class="bi bi-plus-circle"></i> Agregar Equipo
+        </a>
+        <a class="btn btn-outline-info me-2" href="{{ url_for('main.export_excel') }}">
+            <i class="bi bi-file-earmark-excel"></i> Exportar a Excel
+        </a>
+        <!-- Botón para abrir modal de importar CSV -->
+        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#importModal">
+            <i class="bi bi-file-earmark-arrow-up"></i> Importar CSV
+        </button>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Modelo</th>
+            <th>Número de Serie</th>
+            <th>Datacenter</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for equipo in equipos %}
+        <tr>
+            <td>{{ equipo.nombre }}</td>
+            <td>{{ equipo.descripcion }}</td>
+            <td>{{ equipo.modelo }}</td>
+            <td>{{ equipo.numero_serial }}</td>
+            <td>{{ equipo.datacenter }}</td>
+            <td>
+                {% if equipo.estado == 'operativo' %}
+                    <span class="badge bg-success">Operativo</span>
+                {% else %}
+                    <span class="badge bg-danger">Fuera de servicio</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('main.edit_equipo', id=equipo.id) }}" class="btn btn-warning btn-sm me-1">
+                    <i class="bi bi-pencil"></i> Editar
+                </a>
+                <form action="{{ url_for('main.delete_equipo', id=equipo.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal Importar CSV -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="{{ url_for('main.import_csv') }}" method="POST" enctype="multipart/form-data" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="importModalLabel">Importar CSV</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="file" name="file" accept=".csv" class="form-control" required>
+        <small class="text-muted">El archivo debe contener las columnas: nombre, descripcion, modelo, numero_serial, datacenter, estado</small>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Importar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

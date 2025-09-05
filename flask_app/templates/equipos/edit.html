@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Editar Equipo</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label>Nombre</label>
+        <input type="text" name="nombre" class="form-control" value="{{ equipo.nombre }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Descripción</label>
+        <textarea name="descripcion" class="form-control" required>{{ equipo.descripcion }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label>Modelo</label>
+        <input type="text" name="modelo" class="form-control" value="{{ equipo.modelo }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Número de Serie</label>
+        <input type="text" name="numero_serial" class="form-control" value="{{ equipo.numero_serial }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Datacenter</label>
+        <input type="text" name="datacenter" class="form-control" value="{{ equipo.datacenter }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Estado</label>
+        <select name="estado" class="form-select" required>
+            <option value="operativo" {% if equipo.estado == 'operativo' %}selected{% endif %}>Operativo</option>
+            <option value="fuera de servicio" {% if equipo.estado == 'fuera de servicio' %}selected{% endif %}>Fuera de servicio</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a href="{{ url_for('main.home') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
+

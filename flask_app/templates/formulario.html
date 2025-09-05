@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2 class="mb-4">Agregar / Editar Ítem</h2>
+  <form method="POST" action="{{ url_for('guardar_item') }}">
+    {% if item %}
+      <input type="hidden" name="id" value="{{ item.id }}">
+    {% endif %}
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre del ítem</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" value="{{ item.name if item else '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ item.description if item else '' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="/" class="btn btn-secondary">Cancelar</a>
+  </form>
+{% endblock %}

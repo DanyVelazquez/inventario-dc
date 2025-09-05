@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Agregar Nuevo Equipo</h2>
+
+<form action="{{ url_for('main.form_equipo') }}" method="POST" class="row g-3">
+    <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+    </div>
+    <div class="col-md-6">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+    </div>
+    <div class="col-md-6">
+        <label for="modelo" class="form-label">Modelo</label>
+        <input type="text" class="form-control" id="modelo" name="modelo" required>
+    </div>
+    <div class="col-md-6">
+        <label for="numero_serial" class="form-label">Número de Serie</label>
+        <input type="text" class="form-control" id="numero_serial" name="numero_serial" required>
+    </div>
+    <div class="col-md-6">
+        <label for="datacenter" class="form-label">Datacenter</label>
+        <input type="text" class="form-control" id="datacenter" name="datacenter" required>
+    </div>
+    <div class="col-md-6">
+        <label for="estado" class="form-label">Estado</label>
+        <select class="form-select" id="estado" name="estado" required>
+            <option value="operativo">Operativo</option>
+            <option value="fuera de servicio">Fuera de servicio</option>
+        </select>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-save"></i> Guardar
+        </button>
+        <a href="{{ url_for('main.home') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+    </div>
+</form>
+{% endblock %}
+
